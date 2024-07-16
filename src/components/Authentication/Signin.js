@@ -36,10 +36,7 @@ const SignIn = () => {
     }
   };
   const LoginAsGuest = async () => {
-    if (!email && !password) {
-      setErrormessage("enter field email and password");
-      return;
-    }
+   
     try {
       setLoading("true");
       const { data } = await axios.post(
