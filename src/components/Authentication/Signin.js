@@ -28,7 +28,7 @@ const SignIn = () => {
 
       localStorage.setItem("userInfo", JSON.stringify(data));
 
-      nav("/ChatPage");
+      nav("/Chatpage");
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -36,7 +36,6 @@ const SignIn = () => {
     }
   };
   const LoginAsGuest = async () => {
-   
     try {
       setLoading("true");
       const { data } = await axios.post(
@@ -49,7 +48,7 @@ const SignIn = () => {
 
       localStorage.setItem("userInfo", JSON.stringify(data));
 
-      nav("/ChatPage");
+      nav("/Chatpage");
       setLoading(false);
     } catch (e) {
       console.log(e);
