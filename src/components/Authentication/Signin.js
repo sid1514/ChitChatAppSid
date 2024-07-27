@@ -59,10 +59,9 @@ const SignIn = () => {
   };
 
   const GoogleSignin = async (credentialResponse) => {
-
     console.log("signin");
     const userData = jwtDecode(credentialResponse.credential);
-    const Email=userData.email
+    const Email = userData.email;
     console.log(userData);
     try {
       const res = await axios.post(
@@ -70,15 +69,13 @@ const SignIn = () => {
         { email: Email } // Send the token to the backend
       );
       console.log(res);
-nav("/chats")
+      nav("/chats");
       localStorage.setItem("userInfo", JSON.stringify(res.data));
     } catch (error) {
       console.error("Error login user:", error.response);
-      setErrormessage("unauthorized user signup with google first ")
+      setErrormessage("unauthorized user signup with google first ");
     }
   };
-
-
 
   return (
     <div className=" text-center justify-center p-5 align-center font-bold">
@@ -132,7 +129,6 @@ nav("/chats")
           }}
           auto_select={false}
           className="shadow-lg"
-          
         />
       </div>
     </div>

@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage, SuccessMsg } from "./ErrorMessage";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
-import { useGoogleLogin } from "@react-oauth/google";
-import { Icon } from "semantic-ui-react";
+
 const SignUp = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -107,12 +105,14 @@ const SignUp = () => {
           Sign Up
         </button>
       </form>
-      <div className="mt-4 flex justify-center ">
+      <div className="mt-4 flex justify-center text-white ">
         <GoogleLogin
-          clientId={process.env.REACT_APP_CLIENT_ID}
-          buttonText="SignUp with google"
           onSuccess={GoogleSignup}
-          onFailure={GoogleSignup}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+          auto_select={false}
+          className="shadow-lg"
         />
       </div>
     </div>
