@@ -6,11 +6,13 @@ import { BrowserRouter } from "react-router-dom";
 import ChatProvider from "./context/ChatProvider";
 import "semantic-ui-css/semantic.min.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <GoogleOAuthProvider clientId={process.env.CLIENT_ID}>
+      <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
         <ChatProvider>
           <App />
         </ChatProvider>
