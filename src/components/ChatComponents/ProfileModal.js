@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import {
-
   ModalDescription,
   ModalContent,
   ModalActions,
@@ -16,9 +15,6 @@ const ProfileModal = ({ user }) => {
   const [open, setOpen] = React.useState(false);
   const [loggedUser, setloggedUser] = useState([]);
 
-  useEffect(() => {
-    setloggedUser(JSON.parse(localStorage.getItem("userInfo")));
-  }, []);
   return (
     <Modal
       onClose={() => setOpen(false)}
@@ -29,9 +25,8 @@ const ProfileModal = ({ user }) => {
       <ModalContent image>
         <Image src={user.pic} alt={user.name} className="w-1/3 h-1/3" />
 
-        {loggedUser.name == user.name ? (
-            <Icon name="edit" size="large" />
-        ) : null}
+        <Icon name="edit" size="large" />
+
         <ModalDescription className="text-center content-center">
           <Header>
             <h2 className="md:text-6xl">{user.name}</h2>
@@ -51,8 +46,8 @@ const ProfileModal = ({ user }) => {
             icon="checkmark"
             onClick={() => setOpen(false)}
             positive
-          />):null}
-        
+          />
+        ) : null}
       </ModalActions>
     </Modal>
   );

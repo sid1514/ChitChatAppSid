@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import {
   ModalHeader,
-  ModalDescription,
+ 
   ModalContent,
   ModalActions,
   Button,
-  Header,
-  Image,
+ 
   Modal,
   Icon,
   Input,

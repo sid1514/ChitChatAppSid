@@ -41,27 +41,27 @@ const MyChats = ({ fetchAgain }) => {
         <div className="flex flex-col h-full">
           {chat ? (
             <div className="overflow-y-auto md:h-96">
-              {chat.map((chat) => (
+              {chat.map((c) => (
                 <div
-                  onClick={() => setselectedChat(chat)}
+                  onClick={() => setselectedChat(c)}
                   cursor="pointer"
                   className={
-                    selectedChat === chat
+                    selectedChat === c
                       ? " text-white bg-neutral-500 rounded m-2"
                       : "rounded border text-black m-2 shadow-lg"
                   }
-                  key={chat._id}
+                  key={c._id}
                 >
                   <p className="chats bg-neutral-800/25 text-white p-1 md:p-3 hover:bg-neutral-800/75">
-                    {!chat.isGroupChat
-                      ? getSender(loggedUser, chat.users)
-                      : chat.chatName}
-                    {chat.latestMessage && (
+                    {!c.isGroupChat
+                      ? getSender(loggedUser, c.users)
+                      : c.chatName}
+                    {c.latestMessage && (
                       <p>
-                        <b>{chat.latestMessage.sender.name} : </b>
-                        {chat.latestMessage.content.length > 50
-                          ? chat.latestMessage.content.substring(0, 51) + "..."
-                          : chat.latestMessage.content}
+                        <b>{c.latestMessage.sender.name} : </b>
+                        {c.latestMessage.content.length > 50
+                          ? c.latestMessage.content.substring(0, 51) + "..."
+                          : c.latestMessage.content}
                       </p>
                     )}
                   </p>

@@ -8,7 +8,7 @@ function App() {
     <div className="w-full h-screen flex bg bg-gradient-to-r from-indigo-500 text-center justify-center ">
       <Routes>
         <Route path="/" element={<Home />} exact />
-        <Route path="/Chatpage" element={<ChatPage />} exact/>
+        <Route path="/chats" element={<ChatPage />} exact />
       </Routes>
     </div>
   );

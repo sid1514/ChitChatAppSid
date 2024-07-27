@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage } from "./ErrorMessage";
 import Loading from "../../Loader";
-
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 const SignIn = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -28,8 +29,8 @@ const SignIn = () => {
 
       localStorage.setItem("userInfo", JSON.stringify(data));
 
-      nav("/Chatpage");
       setLoading(false);
+      nav("/chats");
     } catch (e) {
       console.log(e);
       setErrormessage("enter correct email and password");
@@ -48,14 +49,37 @@ const SignIn = () => {
 
       localStorage.setItem("userInfo", JSON.stringify(data));
 
-      nav("/Chatpage");
       setLoading(false);
+      nav("/chats");
     } catch (e) {
       console.log(e);
       setLoading(false);
       setErrormessage("enter correct email and password");
     }
   };
+
+  const GoogleSignin = async (credentialResponse) => {
+
+    console.log("signin");
+    const userData = jwtDecode(credentialResponse.credential);
+    const Email=userData.email
+    console.log(userData);
+    try {
+      const res = await axios.post(
+        "https://chatappbackend-97qn.onrender.com/api/user/login/googleauth",
+        { email: Email } // Send the token to the backend
+      );
+      console.log(res);
+nav("/chats")
+      localStorage.setItem("userInfo", JSON.stringify(res.data));
+    } catch (error) {
+      console.error("Error login user:", error.response);
+      setErrormessage("unauthorized user signup with google first ")
+    }
+  };
+
+
+
   return (
     <div className=" text-center justify-center p-5 align-center font-bold">
       {ErrorMsg ? <ErrorMessage message={ErrorMsg} /> : null}
@@ -99,6 +123,16 @@ const SignIn = () => {
         >
           Guest Login
         </button>
+      </div>
+      <div className="mt-4 flex justify-center ">
+        <GoogleLogin
+          onSuccess={GoogleSignin}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+          auto_select={false}
+          className="shadow-lg"
+        />
       </div>
     </div>
   );
