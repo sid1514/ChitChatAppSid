@@ -132,6 +132,7 @@ nav("/chats")
           }}
           auto_select={false}
           className="shadow-lg"
+          
         />
       </div>
     </div>

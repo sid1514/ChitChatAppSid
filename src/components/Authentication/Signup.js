@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage, SuccessMsg } from "./ErrorMessage";
 import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 import { useGoogleLogin } from "@react-oauth/google";
 import { Icon } from "semantic-ui-react";
 const SignUp = () => {
@@ -47,26 +48,25 @@ const SignUp = () => {
     }
   };
 
-   const googleLogin = useGoogleLogin({
-     onSuccess: async (tokenResponse) => {
-       const credential = tokenResponse.credential;
-       try {
-         const response = await axios.post(
-           "https://chatappbackend-97qn.onrender.com/api/user/googlereg",
-           { token: credential }
-         );
-         console.log("User registered successfully:", response.data);
-         setSuccesmsg("User registered successfully. Go to sign in.");
-       } catch (error) {
-         console.error("Error registering user:", error.response);
-         setErrormessage("Error registering user with Google");
-       }
-     },
-     onError: () => {
-       console.log("Login Failed");
-       setErrormessage("Google login failed");
-     },
-   });
+
+
+  const GoogleSignup = async (credentialResponse) => {
+    console.log("signin");
+    //const userData = jwtDecode(credentialResponse.credential);
+    const credential = credentialResponse.credential;
+  
+    try {
+      const res = await axios.post(
+        "https://chatappbackend-97qn.onrender.com/api/user/googlereg",
+        { token: credential } // Send the token to the backend
+      );
+      console.log(res);
+     
+    } catch (error) {
+      console.error("Error login user:", error.response);
+      setErrormessage("unauthorized user signup with google first ");
+    }
+  };
   return (
     <div className="text-center justify-center p-5 align-center h-10/12 font-bold">
       {ErrorMsg ? <ErrorMessage message={ErrorMsg} /> : null}
@@ -111,13 +111,14 @@ const SignUp = () => {
         </button>
       </form>
       <div className="mt-4 flex justify-center ">
-        <button
-          onClick={googleLogin}
-          className="py-3 px-2 border bg-blue-600 shadow-lg font-bold text-white"
-        >
-          <Icon name="google"/>
-          Sign Up with Google
-        </button>
+       
+        <GoogleLogin
+          clientId={process.env.REACT_APP_CLIENT_ID}
+          buttonText="SignUp with google"
+          onSuccess={GoogleSignup}
+          onFailure={GoogleSignup}
+        />
+        ,
       </div>
     </div>
   );
