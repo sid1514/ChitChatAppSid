@@ -48,20 +48,17 @@ const SignUp = () => {
     }
   };
 
-
-
   const GoogleSignup = async (credentialResponse) => {
     console.log("signin");
     //const userData = jwtDecode(credentialResponse.credential);
     const credential = credentialResponse.credential;
-  
+
     try {
       const res = await axios.post(
         "https://chatappbackend-97qn.onrender.com/api/user/googlereg",
         { token: credential } // Send the token to the backend
       );
       console.log(res);
-     
     } catch (error) {
       console.error("Error login user:", error.response);
       setErrormessage("unauthorized user signup with google first ");
@@ -111,14 +108,12 @@ const SignUp = () => {
         </button>
       </form>
       <div className="mt-4 flex justify-center ">
-       
         <GoogleLogin
           clientId={process.env.REACT_APP_CLIENT_ID}
           buttonText="SignUp with google"
           onSuccess={GoogleSignup}
           onFailure={GoogleSignup}
         />
-        ,
       </div>
     </div>
   );
