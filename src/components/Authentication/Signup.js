@@ -57,9 +57,10 @@ const SignUp = () => {
         { token: credential } // Send the token to the backend
       );
       console.log(res);
+      setSuccesmsg("user register successfully go to login")
     } catch (error) {
       console.error("Error login user:", error.response);
-      setErrormessage("unauthorized user signup with google first ");
+      setErrormessage(" user already exist with this email ");
     }
   };
   return (
