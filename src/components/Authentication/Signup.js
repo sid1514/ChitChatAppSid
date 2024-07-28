@@ -47,7 +47,7 @@ const SignUp = () => {
   };
 
   const GoogleSignup = async (credentialResponse) => {
-    console.log("signin");
+    
     //const userData = jwtDecode(credentialResponse.credential);
     const credential = credentialResponse.credential;
 

@@ -64,13 +64,13 @@ const SignIn = () => {
     const Email = userData.email;
     console.log(userData);
     try {
-      const res = await axios.post(
+      const { data } = await axios.post(
         "https://chatappbackend-97qn.onrender.com/api/user/login/googleauth",
         { email: Email } // Send the token to the backend
       );
-      console.log(res);
+
       nav("/chats");
-      localStorage.setItem("userInfo", JSON.stringify(res.data));
+      localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (error) {
       console.error("Error login user:", error.response);
       setErrormessage("unauthorized user signup with google first ");
