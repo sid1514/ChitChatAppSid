@@ -156,7 +156,8 @@ const UpdateGroupChat = ({ fetchAgain, setFetchAgain, fetchMessage }) => {
                 />
               ))}
             </div>
-             {ErrorMsg ? <ErrorMessage message={ErrorMsg} /> : null}
+            <span className="h-min">           
+             {ErrorMsg ? <ErrorMessage message={ErrorMsg} /> : null} </span>
             <div className="">
               <Input
                 placeholder="chat name"
