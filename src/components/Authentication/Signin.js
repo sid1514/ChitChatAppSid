@@ -18,7 +18,7 @@ const SignIn = () => {
       return;
     }
     try {
-      setLoading("true");
+      setLoading(true);
       const { data } = await axios.post(
         `https://chatappbackend-97qn.onrender.com/api/user/login`,
         {
@@ -33,6 +33,7 @@ const SignIn = () => {
       nav("/chats");
     } catch (e) {
       console.log(e);
+      setLoading(false);
       setErrormessage("enter correct email and password");
     }
   };
@@ -72,8 +73,9 @@ const SignIn = () => {
 
       nav("/chats");
       localStorage.setItem("userInfo", JSON.stringify(data));
-        setLoading(false);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error("Error login user:", error.response);
       setErrormessage("unauthorized user signup with google first ");
     }

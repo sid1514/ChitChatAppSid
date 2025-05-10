@@ -52,7 +52,7 @@ const SingleChat = ({ fetchAgain, setfetchAgain }) => {
     }
   };
   const sendMessage = async (event) => {
-    if (event.key == "Enter" && newMessage) {
+    if (event.key === "Enter" && newMessage) {
       socket.emit('stop typing',selectedChat._id)
       try {
         const config = {
@@ -61,19 +61,16 @@ const SingleChat = ({ fetchAgain, setfetchAgain }) => {
             Authorization: `Bearer ${user.token}`,
           },
         };
-
-        setNewMessage("");
         const { data } = await axios.post(
           "https://chatappbackend-97qn.onrender.com/api/message",
           { content: newMessage, chatId: selectedChat._id },
           config
         );
-        console.log(data);
-
         socket.emit("new message", data);
         setMessages([...messages, data]);
-        setNewMessage("");
+        setNewMessage(" ");
       } catch (error) {
+        setNewMessage(" ");
         console.log(error);
       }
     }
@@ -115,9 +112,9 @@ const SingleChat = ({ fetchAgain, setfetchAgain }) => {
   };
 
   return (
-    <div className="bg-neutral-300 h-full ">
+    <div className="bg-neutral-300 h-full w-full">
       {selectedChat ? (
-        <div className="w-full text-xl md:text-2xl justify-between h-full ">
+        <div className="w-full text-xl md:text-2xl justify-between h-full">
           {!selectedChat.isGroupChat ? (
             <div className="w-full ">
               <div className="flex p-6 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-300 hover:to-blue-600">
@@ -164,6 +161,7 @@ const SingleChat = ({ fetchAgain, setfetchAgain }) => {
                 onChange={typingHandler}
                 className="md:w-11/12 my-1"
               />
+              <button className="px-2 text-[16px]" onClick={sendMessage}><img src="send.jpg" alt="" className="rounded-full w-10 h-10"/></button>
             </div>
           </div>
         </div>

@@ -14,6 +14,7 @@ import { ChatState } from "../../context/ChatProvider";
 import UserBadgeItem from "./UserBadgeItem";
 import axios from "axios";
 import UserListItem from "../ChatComponents/UserListItem";
+import { ErrorMessage } from "../Authentication/ErrorMessage";
 const UpdateGroupChat = ({ fetchAgain, setFetchAgain, fetchMessage }) => {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = useState();
@@ -21,7 +22,7 @@ const UpdateGroupChat = ({ fetchAgain, setFetchAgain, fetchMessage }) => {
   const [loading, setLoading] = useState(false);
   const [GrouChatName, setGroupName] = useState("");
   const { user, selectedChat, setselectedChat } = ChatState();
-
+ const [ErrorMsg, setErrormessage] = useState(null);
   const handleRemove = async (user1) => {
     if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
       alert("your not admin only admins can remove");
@@ -98,11 +99,14 @@ const UpdateGroupChat = ({ fetchAgain, setFetchAgain, fetchMessage }) => {
   };
   const handleAddUser = async (user1) => {
     if (selectedChat.users.find((u) => u._id === user1._id)) {
-      console.log("user already there");
+     
+      setErrormessage("user already there")
       return;
     }
     if (selectedChat.groupAdmin._id !== user._id) {
-      console.log("your not admin");
+    
+      setErrormessage("your not admin")
+
       return;
     }
     try {
@@ -152,6 +156,7 @@ const UpdateGroupChat = ({ fetchAgain, setFetchAgain, fetchMessage }) => {
                 />
               ))}
             </div>
+             {ErrorMsg ? <ErrorMessage message={ErrorMsg} /> : null}
             <div className="">
               <Input
                 placeholder="chat name"

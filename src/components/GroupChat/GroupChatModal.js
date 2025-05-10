@@ -13,6 +13,7 @@ import { ChatState } from "../../context/ChatProvider";
 import axios from "axios";
 import UserListItem from "../ChatComponents/UserListItem";
 import UserBadgeItem from "./UserBadgeItem";
+import { ErrorMessage } from "../Authentication/ErrorMessage";
 
 const GroupChatModal = () => {
   const [open, setOpen] = React.useState(false);
@@ -22,7 +23,7 @@ const GroupChatModal = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const { user, chat, setChats } = ChatState();
-
+  const [ErrorMsg, setErrormessage] = useState(null);
   const handleSearch = async (query) => {
     setSearch(query);
     if (!query) {
@@ -40,7 +41,6 @@ const GroupChatModal = () => {
         config
       );
       setLoading(false);
-      console.log(data);
       setSearchResult(data);
     } catch (error) {
       console.log(error);
@@ -48,7 +48,7 @@ const GroupChatModal = () => {
   };
   const handleGroup = (userToAdd) => {
     if (selectedUsers.includes(userToAdd)) {
-      console.log("user already added");
+      setErrormessage("user already added")
       return;
     }
     setSelectedUsers([...selectedUsers, userToAdd]);
@@ -62,7 +62,7 @@ const GroupChatModal = () => {
       alert("please fill the details");
       return;
     }
-    console.log(selectedUsers,GrouChatName)
+
     try {
       const config = {
         headers: {
@@ -102,6 +102,7 @@ const GroupChatModal = () => {
       </ModalDescription>
       <ModalContent className="text-left content-center m-5">
         <div className="flex flex-row space-x-2">
+         {ErrorMsg ? <ErrorMessage message={ErrorMsg} /> : null}
           <Input
             placeholder="group chat name"
             type="text"
